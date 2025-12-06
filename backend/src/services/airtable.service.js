@@ -12,12 +12,22 @@ async function listTables(user, baseId) {
   return resp.data;
 }
 
-async function getTableMeta(user, baseId, tableId) {
+async function getTableMeta(user, baseId, tableNameOrId) {
   const resp = await airtableClient.get(
-    `/meta/bases/${baseId}/tables/${tableId}`,
+    `/meta/bases/${baseId}/tables/`,
     { user }
   );
-  return resp.data;
+
+  const tables = resp.data.tables || [];
+  const table =
+    tables.find((t) => t.id === tableNameOrId) ||
+    tables.find((t) => t.name === tableNameOrId);
+  if (!table) {
+    const err = new Error("table_not_found");
+    err.code = "table_not_found";
+    throw err;
+  }
+  return table;
 }
 
 async function createRecord(user, baseId, tableNameOrId, fields) {

@@ -72,6 +72,7 @@ async function createForm(req, res) {
     await form.save();
     return res.json({ ok: true, form });
   } catch (err) {
+    console.log(err)
     console.error("createForm", err.response?.data || err.message);
     return res.status(500).json({ ok: false, error: "server_error" });
   }

@@ -2,7 +2,7 @@ import axios from "axios";
 
 function buildReqHeader() {
   const encoded = Buffer.from(
-    `${AIRTABLE_CLIENT_ID}:${AIRTABLE_CLIENT_SECRET}`
+    `${process.env.AIRTABLE_CLIENT_ID}:${process.env.AIRTABLE_CLIENT_SECRET}`
   ).toString("base64");
   return `Basic ${encoded}`;
 }
@@ -49,7 +49,6 @@ async function refreshAirtableToken(user) {
 
 async function getValidAirtableToken(user) {
   if (!user) throw new Error("User missing");
-
   const now = Date.now();
   const expiryTime = user.tokenExpiry
     ? new Date(user.tokenExpiry).getTime()

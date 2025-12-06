@@ -5,15 +5,20 @@ import crypto from "crypto";
 function setSessionCookie(res, userId) {
   res.cookie("uId", userId, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
+
+    // secure: process.env.NODE_ENV === "production",
+    secure: false,
+    maxAge: 24 * 60 * 60 * 1000,
+    //this is not working idk why so..
+    // signed: true,
   });
 }
 
 function clearSessionCookie(res) {
-  res.clearCookie("uid", {
+  res.clearCookie("uId", {
     httpOnly: true,
-    signed: true,
+    //this is not working idk why
+    // signed: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
   });

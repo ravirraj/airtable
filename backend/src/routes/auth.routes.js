@@ -1,10 +1,8 @@
-import { Router } from "express";
-import { startOAuth, handleOAuthCallback } from "../controller/auth.controller.js";
-
-const router = Router();
-
-// Define your auth routes here
+import express from 'express';
+const router = express.Router();
+import { startOAuth, handleOAuthCallback, logout } from "../controller/auth.controller.js";
 router.get("/airtable", startOAuth);
 router.get("/airtable/callback", handleOAuthCallback);
+router.get("/logout", logout);
 
 export default router;

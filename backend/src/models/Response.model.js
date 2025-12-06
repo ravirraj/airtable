@@ -1,8 +1,9 @@
-const responseSchema = new Schema(
+import mongoose from "mongoose";
+const responseSchema = new mongoose.Schema(
   {
-    formId: { type: Schema.Types.ObjectId, ref: "Form", required: true },
+    formId: { type: mongoose.Schema.Types.ObjectId, ref: "Form", required: true },
     airtableRecordId: String,
-    answers: Schema.Types.Mixed,
+    answers: mongoose.Schema.Types.Mixed,
     status: {
       type: String,
       enum: ["synced", "pending", "deletedInAirtable"],

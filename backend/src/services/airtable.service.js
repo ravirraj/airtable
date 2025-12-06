@@ -1,4 +1,4 @@
-const airtableClient = require("../utils/airtableClient");
+import airtableClient from "../utils/airtableClient.js";
 
 async function listBases(user) {
   const resp = await airtableClient.get("/meta/bases", { user });
@@ -28,3 +28,4 @@ async function createRecord(user, baseId, tableNameOrId, fields) {
   );
   return resp.data;
 }
+export { listBases, listTables, getTableMeta, createRecord };

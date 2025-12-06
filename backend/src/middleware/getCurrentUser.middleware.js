@@ -1,14 +1,18 @@
-import { User } from "../models/User.model";
+import { User } from "../models/User.model.js";
 
 export default async function getCurrentUser(req, res, next) {
   try {
-    const signed = req.signedCookies?.uId;
-    if (!signed) {
+    const cookie = req.cookies?.uId;
+
+    //signed one is not working for some reason
+    //todo : investigate later
+    console.log("this is the cookie ", req.cookies.uId);
+    if (!cookie) {
       req.currentUser = null;
       return next();
     }
 
-    const user = await User.findById(signed);
+    const user = await User.findById(cookie);
     if (!user) {
       req.currentUser = null;
       return next();

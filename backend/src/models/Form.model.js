@@ -24,7 +24,7 @@ const conditionalRulesSchema = new mongoose.Schema(
   { _id: false }
 );
 
-const questionSchema = new Schema(
+const questionSchema = new mongoose.Schema(
   {
     questionKey: { type: String, required: true },
     airtableFieldId: { type: String, required: true },
@@ -37,9 +37,9 @@ const questionSchema = new Schema(
   { _id: false }
 );
 
-const formSchema = new Schema(
+const formSchema = new mongoose.Schema(
   {
-    owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     title: String,
     airtableBaseId: String,
     airtableTableId: String,

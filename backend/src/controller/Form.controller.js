@@ -25,8 +25,11 @@ async function createForm(req, res) {
     return res.status(400).json({ error: "missing_base_or_table" });
 
   try {
-    const token = await getValidAirtableToken(user);
-    const meta = await getTableMeta(token, airtableBaseId, airtableTableId);
+    const meta = await getTableMeta(
+      req.currentUser,
+      airtableBaseId,
+      airtableTableId
+    );
     const fieldMap = {};
     (meta.fields || []).forEach((f) => {
       fieldMap[f.name] = f;
@@ -122,9 +125,8 @@ async function submitForm(req, res) {
   });
 
   try {
-    const token = await getValidAirtableToken(req.currentUser);
     const airtableResp = await createRecord(
-      token,
+      req.currentUser,
       form.airtableBaseId,
       form.airtableTableId,
       fields

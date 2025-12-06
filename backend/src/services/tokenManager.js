@@ -48,11 +48,29 @@ async function refreshAirtableToken(user) {
 }
 
 async function getValidAirtableToken(user) {
+  console.log("kya ye user aa rha haaaai?????",user)
   if (!user) throw new Error("User missing");
   const now = Date.now();
   const expiryTime = user.tokenExpiry
+  console.log("thissssssssssssssss",expiryTime)
     ? new Date(user.tokenExpiry).getTime()
     : null;
+
+  // console.log("NOW (ms):", now);
+  // console.log("NOW (ISO):", new Date(now).toISOString());
+
+  // console.log("RAW tokenExpiry from DB:", user.tokenExpiry);
+  // console.log("expiryTime (ms):", expiryTime);
+
+  // if (expiryTime) {
+  //   console.log("expiryTime (ISO):", new Date(expiryTime).toISOString());
+  //   console.log(
+  //     "expiryTime - 60s (ISO):",
+  //     new Date(expiryTime - 60 * 1000).toISOString()
+  //   );
+  // }
+
+  // console.log("Should refresh?:", !expiryTime || now > expiryTime - 60 * 1000);
 
   if (!expiryTime || now > expiryTime - 60 * 1000) {
     return await refreshAirtableToken(user);

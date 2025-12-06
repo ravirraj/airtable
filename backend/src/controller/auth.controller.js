@@ -56,8 +56,10 @@ async function handleOAuthCallback(req, res) {
   const encodedCredentials = Buffer.from(
     `${process.env.AIRTABLE_CLIENT_ID}:${process.env.AIRTABLE_CLIENT_SECRET}`
   ).toString("base64");
+
   const authorizationHeader = `Basic ${encodedCredentials}`;
   const { code, state } = req.query;
+
   if (req.query.error) {
     console.log(req.query.error_description || req.query.error);
 
@@ -70,7 +72,9 @@ async function handleOAuthCallback(req, res) {
   if (!code) {
     return res.status(400).send("Authorization code is missing");
   }
+
   let stored;
+
   try {
     stored = req.cookies.airtable_oauth
       ? JSON.parse(req.cookies.airtable_oauth)
@@ -78,6 +82,7 @@ async function handleOAuthCallback(req, res) {
   } catch {
     stored = null;
   }
+
   if (!stored || !stored.codeVerifier || !stored.state) {
     return res.status(400).send("Missing PKCE data (state / verifier)");
   }
@@ -148,7 +153,7 @@ async function handleOAuthCallback(req, res) {
       user.tokenExpiry = new Date(Date.now() + expiresIn * 1000);
     }
     await user.save();
-    
+
     setSessionCookie(res, user._id);
     console.log("User logged in:", user._id);
     return res.redirect("/");

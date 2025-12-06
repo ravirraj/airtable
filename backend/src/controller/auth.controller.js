@@ -11,7 +11,12 @@ function setSessionCookie(res, userId) {
 }
 
 function clearSessionCookie(res) {
-  res.clearCookie("session_token");
+  res.clearCookie("uid", {
+    httpOnly: true,
+    signed: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  });
 }
 
 async function startOAuth(req, res) {

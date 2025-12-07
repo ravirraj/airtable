@@ -2,6 +2,7 @@ import airtableClient from "../utils/airtableClient.js";
 
 async function listBases(user) {
   const resp = await airtableClient.get("/meta/bases", { user });
+  console.log("eelo",resp)
   return resp.data;
 }
 

@@ -8,10 +8,10 @@ router.get('/bases', requireAuth, async (req, res) => {
   try {
     
     const data = await listBases(req.currentUser);
+    console.log("thiis is data ",data)
     return res.json({ ok: true, data });
   } catch (err) {
     console.error('airtable bases', err.response?.data || err.message);
-    console.log(err)
     if (err.response && err.response.status === 401) return res.status(401).json({ ok:false, error:'reauth_required' });
     return res.status(500).json({ ok:false });
   }

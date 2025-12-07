@@ -166,7 +166,7 @@ async function handleOAuthCallback(req, res) {
 
     setSessionCookie(res, user._id);
     console.log("User logged in:", user._id);
-    return res.redirect("/");
+    return res.redirect("http://localhost:5173");
   } catch (error) {
     console.error("Error exchanging code for token:", error);
     return res.status(500).send("Failed to exchange code for token");

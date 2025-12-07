@@ -16,7 +16,8 @@ import formsRoutes from "./routes/forms.routes.js";
 import getCurrentUser from "./middleware/getCurrentUser.middleware.js";
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
+    credentials: true,
   })
 );
 
